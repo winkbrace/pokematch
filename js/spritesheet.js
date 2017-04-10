@@ -55,16 +55,21 @@ SpriteSheet = Class.extend({
 
 	// get a pokemon object by color
 	get_pokemon_img: function(color)
-	{
-		// loop through the pokemons and return the one with the matching color
+    {
+        // loop through the pokemons and return the one with the matching color
         for (var i = 0; i < this.pokemons.length; i++) {
-			var pokemon = this.pokemons[i];
-			if (pokemon.color == color)
-				return pokemon;
-		}
+            var pokemon = this.pokemons[i];
+            if (pokemon.color == color)
+                return pokemon;
+        }
 
-		// return null when nothing found
-		return null;
+        return null;
+    },
+
+	get_random_pokemon: function()
+	{
+		var keys = Object.keys(atlas.pokemons);
+		return keys[keys.length * Math.random() << 0];
 	}
 
 });

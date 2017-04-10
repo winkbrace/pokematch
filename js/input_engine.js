@@ -7,11 +7,6 @@
  */
 InputEngineClass = Class.extend({
 
-	// A dictionary mapping ASCII key codes to string values
-	// describing the action we want to take when that key is
-	// pressed.
-	bindings: {},
-
 	// A dictionary mapping actions that might be taken in our
 	// game to a boolean value indicating whether that action
 	// is currently being performed.
@@ -25,14 +20,8 @@ InputEngineClass = Class.extend({
     },
 
 	//-----------------------------
-	setup: function () {
-
-		gInputEngine.bind(13, 'enter'); // enter (to start the game)
-
-		// Adding the event listeners for the appropriate DOM events.
-		$(document).keydown(gInputEngine.onKeyDown);
-		$(document).keyup(gInputEngine.onKeyUp);
-
+	setup: function ()
+    {
         var container = $("#canvas_container");
         container.on('click', gInputEngine.onClick);
         container.on('mousemove', gInputEngine.onMouseMove);
@@ -126,13 +115,6 @@ InputEngineClass = Class.extend({
 		if (gInputEngine.button_new_game(x, y))
 			game.new_game();
 
-		else if (gInputEngine.button_options(x, y))
-			game.pause_game();
-
-		// paused
-		else if (gInputEngine.button_resume(x, y))
-			game.resume_game();
-
 		// loading & credits screen
 		else if (gInputEngine.button_enter(x, y))
 			game.start_game();
@@ -170,51 +152,6 @@ InputEngineClass = Class.extend({
 	button_submit: function(x, y) {
 		return (x >= 208 && x <= 296 && y >= 438 && y <= 463 && ! game.loading && game.game_is_over && game.has_high_score);
 	},
-
-	// add event listeners
-	onKeyDown: function (event) {
-
-		// execute normal browser action when game has ended
-        if (game.game_is_over) {
-            return true;
-        }
-
-		// Grab the keyID property of the event object parameter,
-		// then set the equivalent element in the 'actions' object
-		// to false.
-		//
-		// You'll need to use the bindings object you set in 'bind'
-		// in order to do this.
-		var action = gInputEngine.bindings[event.keyCode];
-
-        if (action) {
-            game.execute_input(action);
-        }
-
-		return false; // do not execute normal browser action for this input
-	},
-
-	// add event listeners
-	onKeyUp: function (event) {
-
-		// execute normal browser action when game has ended
-		if (game.game_is_over) {
-            return true;
-        }
-
-        // Add other input handling here if required.
-        // var action = gInputEngine.bindings[event.keyCode];
-
-		return false; // do not execute normal browser action for this key
-	},
-
-    // The bind function takes an ASCII keycode and a string representing the action to
-    // take when that key is pressed.
-    // Fill in the bind function so that it sets the element at the 'key'th value
-    // of the 'bindings' object to be the provided 'action'.
-    bind: function (key, action) {
-        gInputEngine.bindings[key] = action;
-    }
 
 });
 

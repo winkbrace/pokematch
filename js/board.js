@@ -7,7 +7,7 @@ BoardClass = Class.extend({
 
 	// set up the board
 	'width': 7 * 40,
-	'height': 12 * 40,
+	'height': 11 * 40,
 	'tilesize': 40, // width and height of a tile in the grid
     // top left pixel - to be set by init()
     'x': 0,
@@ -28,8 +28,8 @@ BoardClass = Class.extend({
         // create timer pattern
         this.timer_pattern = $("#canvas").createPattern({
             // Define width/height of pattern (before repeating)
-            width:  this.tilesize,
-            height: this.tilesize,
+            width:  20,
+            height: 20,
             source: function(context) {
                 // Draw striped background (which will repeat)
                 $(this).drawRect({
@@ -49,7 +49,7 @@ BoardClass = Class.extend({
         });
 
         // create tile lines background
-        for (var x = this.x + 0.5; x <= this.width + this.tilesize; x += this.tilesize) {
+        for (var x = this.x - 0.5; x <= this.width + this.tilesize; x += this.tilesize) {
             ctxbg.beginPath();
             ctxbg.moveTo(x, this.y);
             ctxbg.lineTo(x, this.height + this.y);
@@ -78,6 +78,15 @@ BoardClass = Class.extend({
 		var pokemon = g_spritesheet.get_pokemon_img(color);
 		ctx.drawImage(g_spritesheet.img, pokemon.x, pokemon.y, pokemon.w, pokemon.h, pos_x, pos_y, this.tilesize, this.tilesize);
 	},
+
+	draw_grid: function(grid)
+    {
+        for (var x = 0; x < grid.length; x++) {
+            for (var y = 0; y < grid[x].length; y++) {
+                board.draw_pokemon(grid[x][y]['pokemon'], x, y);
+            }
+        }
+    },
 
 	/**
 	 * draw empty area
@@ -138,7 +147,7 @@ BoardClass = Class.extend({
 	draw_total_score: function(score)
 	{
 		var x = this.x;
-		var y = this.y - (3 * this.tilesize);
+		var y = 440;
 		var w = 175;
 		var h = 40;
 
@@ -162,7 +171,7 @@ BoardClass = Class.extend({
         var x = this.x;
         var y = (this.y + this.height + this.tilesize);
         var w = Math.floor(this.width * percentage);
-        var h = this.tilesize;
+        var h = 20;
 
         ctx.clearRect(x, y, this.width, h);
 
