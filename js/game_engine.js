@@ -85,6 +85,21 @@ GameEngineClass = Class.extend({
         }
 	},
 
+	set_active: function (tap)
+	{
+	    // determine grid location of tap
+		var x = Math.floor((tap.x - board.x - board.canvas_left_margin) / board.tilesize);
+		var y = Math.floor((tap.y - board.y - board.canvas_top_margin) / board.tilesize);
+
+		if (! game.grid[x] || ! game.grid[x][y]) {
+		    dump(x, y, game.grid);
+		    return;
+        }
+
+		game.active = {"pokemon": game.grid[x][y]['pokemon'], "x": x, "y": y};
+		dump(tap.x, x, tap.y, y, game.active.pokemon);
+	},
+
 	// move a pokemon on the board
 	move: function(x, y)
 	{
@@ -284,4 +299,3 @@ GameEngineClass = Class.extend({
 });
 
 game = new GameEngineClass();
-game.start_game();

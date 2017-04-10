@@ -13,6 +13,9 @@ BoardClass = Class.extend({
     'x': 0,
 	'y': 0,
 
+    'canvas_top_margin': 0,
+    'canvas_left_margin': 0,
+
 	// array to store all the generated blocks in
 	blocks: [],
 
@@ -24,6 +27,10 @@ BoardClass = Class.extend({
 	{
 		this.x = Math.floor((canvas.width - this.width) / 2);
 		this.y = 0;
+
+        var style = window.getComputedStyle(document.getElementById("canvas_container"));
+        this.canvas_left_margin = parseInt(style.marginLeft);
+        this.canvas_top_margin = parseInt(style.marginTop);
 
         // create timer pattern
         this.timer_pattern = $("#canvas").createPattern({
@@ -189,5 +196,3 @@ BoardClass = Class.extend({
 });
 
 var board = new BoardClass();
-
-

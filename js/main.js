@@ -29,8 +29,7 @@ $(document).ready(function()
             //     x: 0, y: 380,
             //     fromCenter: false
             // });
-            board.draw_pokemon('blue', 1, 1);
-            board.draw_pokemon('orange', 2, 1);
+            game.start_game();
         });
     };
     img.src = "img/blank.png";

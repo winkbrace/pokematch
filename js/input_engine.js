@@ -22,19 +22,21 @@ InputEngineClass = Class.extend({
 	//-----------------------------
 	setup: function ()
     {
-        var container = $("#canvas_container");
-        container.on('click', gInputEngine.onClick);
-        container.on('mousemove', gInputEngine.onMouseMove);
+        var touchArea = $("#touch-area");
+        touchArea.on('click', gInputEngine.onClick);
+        touchArea.on('mousemove', gInputEngine.onMouseMove);
 
-        document.getElementById('canvas_container').addEventListener('touchstart', gInputEngine.onTouchStart);
-        document.getElementById('canvas_container').addEventListener('touchmove', gInputEngine.onTouchMove);
-        document.getElementById('canvas_container').addEventListener('touchend', gInputEngine.onTouchEnd);
+        document.getElementById('touch-area').addEventListener('touchstart', gInputEngine.onTouchStart);
+        document.getElementById('touch-area').addEventListener('touchmove', gInputEngine.onTouchMove);
+        document.getElementById('touch-area').addEventListener('touchend', gInputEngine.onTouchEnd);
 	},
 
 	onTouchStart: function(event)
     {
         gInputEngine.movement.start.x = event.touches[0].clientX;
         gInputEngine.movement.start.y = event.touches[0].clientY;
+
+        game.set_active(gInputEngine.movement.start);
 
         event.preventDefault();
     },
